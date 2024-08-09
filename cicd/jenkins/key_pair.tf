@@ -10,9 +10,8 @@ resource "tls_private_key" "key" {
   rsa_bits  = 4096
 }
 
-resource "tls_public_key" "key" {
-  algorithm = tls_private_key.key.algorithm
-  public_key_openssh = tls_private_key.key.public_key_openssh
+data "tls_public_key" "private_key_pem" {
+  private_key_pem = tls_private_key.key.private_key_pem
 }
 
 # Store the private key in AWS Secrets Manager
@@ -23,5 +22,5 @@ resource "aws_secretsmanager_secret" "key_pair_secret" {
 
 resource "aws_secretsmanager_secret_version" "key_pair_secret_version" {
   secret_id     = aws_secretsmanager_secret.key_pair_secret.id
-  secret_string = tls_private_key.key.private_key_pem
+  secret_string = data.tls_public_key.private_key_pem
 }
