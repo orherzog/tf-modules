@@ -13,8 +13,3 @@ variable "num_azs" {
     description = "Number of availability zones to use"
     type = number
 }
-variable "region" {
-    default = "eu-west-1"
-    description = "AWS region"
-    type = string
-}

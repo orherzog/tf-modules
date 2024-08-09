@@ -13,5 +13,10 @@ module "vpc" {
   azs = local.azs
 
   # Create private subnets in each selected AZ
-  private_subnets = [for k in local.azs : cidrsubnet(var.vpc_cidr, 4, index(local.azs, k))]
+  private_subnets = [for k in range(length(local.azs)) : cidrsubnet(var.vpc_cidr, 4, k)]
+}
+
+# Output the selected availability zones for debugging
+output "selected_azs" {
+  value = local.azs
 }
