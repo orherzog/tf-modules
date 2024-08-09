@@ -1,7 +1,7 @@
 resource "aws_instance" "ec2_instance" {
   ami                    = data.aws_ami.ami.image_id
   instance_type          = var.instance_type
-  key_name               = aws_key_pair.ec2_key_pair
+  key_name               = aws_key_pair.ec2_key_pair.key_name 
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [aws_security_group.security_group.id]
   iam_instance_profile   = aws_iam_instance_profile.instance_profile.name
