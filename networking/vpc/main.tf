@@ -9,12 +9,12 @@ module "vpc" {
   name = var.env
   cidr = var.vpc_cidr
 
-  # Use the selected availability zones
-  azs = local.azs
+  azs = data.aws_availability_zones.available.names[0:var.num_azs]
 
-  public_subnets   = [for k in range(length(local.azs)) : cidrsubnet(var.vpc_cidr, 4, k)]
-  private_subnets  = [for k in range(length(local.azs)) : cidrsubnet(var.vpc_cidr, 4, k + 4)]
-  database_subnets = [for k in range(length(local.azs)) : cidrsubnet(var.vpc_cidr, 4, k + 8)]
+  public_subnets   = local.public_subnet_cidrs
+  private_subnets  = local.private_subnet_cidrs
+  database_subnets = local.database_subnet_cidrs
+
 
   enable_dns_hostnames = true
   enable_dns_support   = true
@@ -23,7 +23,7 @@ module "vpc" {
   single_nat_gateway = true
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
-  vpc_flow_log_iam_role_name            = "vpc-complete-example-role"
+  vpc_flow_log_iam_role_name            = "vpc-flow-log-role"
   vpc_flow_log_iam_role_use_name_prefix = false
   enable_flow_log                       = true
   create_flow_log_cloudwatch_log_group  = true
