@@ -9,14 +9,9 @@ module "vpc" {
   name = var.env
   cidr = var.vpc_cidr
 
-  # Use the selected availability zones
-  azs = local.azs
+  # Use the selected availability zones directly
+  azs = slice(data.aws_availability_zones.available.names, 0, var.num_azs)
 
   # Create private subnets in each selected AZ
-  private_subnets = [for k in range(length(local.azs)) : cidrsubnet(var.vpc_cidr, 4, k)]
-}
-
-# Output the selected availability zones for debugging
-output "selected_azs" {
-  value = local.azs
+  private_subnets = [for k in range(var.num_azs) : cidrsubnet(var.vpc_cidr, 4, k)]
 }
