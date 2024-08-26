@@ -15,7 +15,6 @@ variable "eks_version" {
 #variable "iam_role_instance" {}
 #variable "storage_layer" {type = any}
 
-variable "replica_count" {}
 variable "shared_services_account_id" {}
 variable "ssl_policy" {}
 variable "client_prefix_list" {}
