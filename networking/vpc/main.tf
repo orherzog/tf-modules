@@ -45,4 +45,9 @@ resource "aws_ec2_managed_prefix_list" "client_subnets" {
     cidr        = "10.111.0.0/16"
     description = "Secondary"
   }
+
+  entry {
+    cidr        = "0.0.0.0/0"
+    description = "Primary"
+  }
 }
