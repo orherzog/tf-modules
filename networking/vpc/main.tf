@@ -23,7 +23,7 @@ module "vpc" {
   single_nat_gateway = true
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
-  vpc_flow_log_iam_role_name            = "vpc-flow-log-role"
+  vpc_flow_log_iam_role_name            = "vpc-flow-log-role-${var.env}"
   vpc_flow_log_iam_role_use_name_prefix = false
   enable_flow_log                       = true
   create_flow_log_cloudwatch_log_group  = true
