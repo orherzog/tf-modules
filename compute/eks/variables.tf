@@ -3,6 +3,7 @@ variable "env_type" {}
 variable "vpc_id" {}
 variable "cidr" {}
 variable "acm_certificate_arn" {}
+variable "common_tags" { type = map(string) }
 variable "subnet_ids" { type = list(string) }
 variable "eks_mng_settings" { type = any }
 variable "domain_name" {}
