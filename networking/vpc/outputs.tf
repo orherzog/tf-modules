@@ -52,3 +52,7 @@ output "private_route_table_ids" {
   description = "List of IDs of private route tables"
   value       = module.vpc.private_route_table_ids
 }
+
+output "client_prefix_list" {
+  value = aws_ec2_managed_prefix_list.client_subnets.id
+}

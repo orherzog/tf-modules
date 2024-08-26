@@ -7,9 +7,9 @@ module "vpc" {
   version = "5.12.0"
 
   name = var.env
-  cidr = var.vpc_cidr
+  cidr = var.cidr
 
-  azs = slice(data.aws_availability_zones.available.names, 0, var.num_azs)
+  azs = slice(data.aws_availability_zones.available.names, 0, var.az_number)
 
   public_subnets   = local.public_subnet_cidrs
   private_subnets  = local.private_subnet_cidrs
@@ -29,4 +29,20 @@ module "vpc" {
   create_flow_log_cloudwatch_log_group  = true
   create_flow_log_cloudwatch_iam_role   = true
   flow_log_max_aggregation_interval     = 60
+}
+
+resource "aws_ec2_managed_prefix_list" "client_subnets" {
+  name           = "All client CIDR-s"
+  address_family = "IPv4"
+  max_entries    = 5
+
+  entry {
+    cidr        = "10.110.0.0/16"
+    description = "Primary"
+  }
+
+  entry {
+    cidr        = "10.111.0.0/16"
+    description = "Secondary"
+  }
 }
