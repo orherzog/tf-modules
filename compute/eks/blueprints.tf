@@ -1,6 +1,4 @@
-data "aws_ecrpublic_authorization_token" "token" {
-  provider = aws.il-central-1
-}
+data "aws_ecrpublic_authorization_token" "token" {}
 
 module "eks_blueprints_addons" {
   source  = "aws-ia/eks-blueprints-addons/aws"
